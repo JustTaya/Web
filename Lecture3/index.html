@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Lecture3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .figure {
+            height: 15vw;
+            width: 40vw;
+            border-top-right-radius: 5vw;
+            border-bottom-left-radius: 5vw;
+
+            background: #83A7C9;
+            border: 0.5vw solid black;
+
+            position: relative;
+
+            top: 30vh;
+            left: 50vw;
+            transform: translate(-50%, -50%);
+        }
+
+        .circle {
+            height: 5vw;
+            width: 5vw;
+
+            border-radius: 5vw;
+
+            background: red;
+            border: 0.5vw solid black;
+
+            position: absolute;
+        }
+
+        .circle1 {
+            bottom: 1vw;
+            left: 1vw;
+        }
+
+        .circle2 {
+            top: 1vw;
+            right: 1vw;
+        }
+
+        .block {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, 0);
+            float: bottom;
+        }
+
+        .block-new {
+            float: bottom;
+        }
+
+        .square {
+            height: 0;
+            width: 0;
+            border-left: 3vw solid red;
+            border-bottom: 3vw solid red;
+            border-top: 3vw solid red;
+            border-right: 3vw solid red;
+
+            background: red;
+
+            margin: 1vw;
+            float: left;
+        }
+
+        .square-new {
+            height: 0;
+            width: 0;
+            border-left: 3vw solid red;
+            border-bottom: 3vw solid red;
+            border-top: 3vw solid red;
+            border-right: 3vw solid red;
+
+            background: red;
+
+            margin: 1vw;
+            float: left;
+        }
+
+        .square-new:hover {
+            border-left: 3vw solid blue;
+            border-bottom: 3vw solid blue;
+            border-top: 3vw solid blue;
+            border-right: 3vw solid blue;
+        }
+
+        .square1-new:hover {
+            border-left: 3vw solid yellow;
+            border-bottom: 3vw solid yellow;
+            border-top: 3vw solid yellow;
+            border-right: 3vw solid yellow;
+        }
+
+        .rectangle1 {
+            height: 0;
+            width: 0;
+            border-left: 3vw solid red;
+            border-bottom: 3vw solid red;
+            border-top: 3vw solid transparent;
+            border-right: 3vw solid transparent;
+
+
+            margin: 1vw;
+            float: left;
+        }
+
+        .rectangle1-new {
+            height: 0;
+            width: 0;
+            border-left: 3vw solid red;
+            border-bottom: 3vw solid red;
+            border-top: 3vw solid transparent;
+            border-right: 3vw solid transparent;
+
+
+            margin: 1vw;
+            float: left;
+        }
+
+        .rectangle1-new:hover {
+            border-left: 3vw solid black;
+            border-bottom: 3vw solid black;
+            border-top: 3vw solid transparent;
+            border-right: 3vw solid transparent;
+
+        }
+
+        .rectangle2 {
+            height: 0;
+            width: 0;
+            border-left: 3vw solid transparent;
+            border-bottom: 3vw solid red;
+            border-top: 3vw solid transparent;
+            border-right: 3vw solid red;
+
+            margin: 1vw;
+            float: left;
+        }
+
+        .rectangle2-new {
+            height: 0;
+            width: 0;
+            border-left: 3vw solid transparent;
+            border-bottom: 3vw solid red;
+            border-top: 3vw solid transparent;
+            border-right: 3vw solid red;
+
+            margin: 1vw;
+            float: left;
+        }
+
+        .rectangle2-new:hover {
+            border-left: 3vw solid transparent;
+            border-bottom: 3vw solid green;
+            border-top: 3vw solid transparent;
+            border-right: 3vw solid green;
+
+        }
+
+        .squoted::before, .squoted::after {
+            content: "!";
+        }
+    </style>
+</head>
+<body>
+<div class="block-new">
+    <div class="circle"></div>
+    <div class="figure">
+        <div class="circle circle1"></div>
+        <div class="circle circle2"></div>
+    </div>
+</div>
+<div class="block">
+    <div class="block-new">
+        <div class="square"></div>
+        <div class="rectangle1"></div>
+        <div class="square square1"></div>
+        <div class="rectangle2"></div>
+    </div>
+
+    <div class="block-new">
+        <div class="square-new"></div>
+        <div class="rectangle1-new"></div>
+        <div class="square-new square1-new"></div>
+        <div class="rectangle2-new"></div>
+    </div>
+    <div class="block-new">
+        <div class="squoted">Text</div>
+    </div>
+</div>
+
+</body>
+</html>
