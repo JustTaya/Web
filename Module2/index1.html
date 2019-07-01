@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        body {
+            margin: 0;
+        }
+
+        #control {
+            height: 50px;
+        }
+
+        #gistogram {
+            height: calc(100vh - 70px);
+            border: 1px solid black;
+            overflow-y: hidden;
+        }
+
+        #gistogram div {
+            background: black;
+            color: white;
+            text-align: center;
+            width: 50px;
+            float: left;
+            position: relative;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body><div id="control">
+    <input type=number id="new_value" />
+    <button id="add_value">Add</button>
+</div>
+<div id="gistogram">
+</div>
+</body>
+<script>
+    var gisto_data = [];
+
+    function updateGisto() {
+
+        var maximum = Math.max.apply(null, gisto_data);
+        var gistogram = document.getElementById("gistogram");
+        gistogram.innerHTML = "";
+        gistogram.style.width = (gisto_data.length + 1) * 70 + "px";
+        for (var data of gisto_data) {
+            var newDiv = document.createElement("div");
+            newDiv.innerText = data;
+            newDiv.style.top = 100 - data / maximum * 100 + "%";
+            newDiv.style.height = data / maximum * 100 + "%";
+            gistogram.appendChild(newDiv);
+        }
+    }
+    updateGisto();
+
+    document.getElementById("add_value").addEventListener("click", function addItem() {
+        console.log(document.getElementById("new_value").value);
+        gisto_data.push(parseInt(document.getElementById("new_value").value));
+        updateGisto();
+    });
+</script>
+</html>

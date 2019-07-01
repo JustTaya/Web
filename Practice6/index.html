@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Practice 6</title>
+    <style>
+        body {
+            left: 0;
+            top: 0;
+            width: 90vw;
+        }
+
+        span {
+            margin-left: .5vw;
+        }
+
+        .box {
+            font-family: Calibri;
+            color: #cccccc;
+            font-size: 1.5vw;
+            border: .1vw solid black;
+            margin: .3vw;
+            padding: .2vw;
+            -webkit-box-shadow: .1vw .2vw .2vw 0 #444444;
+            box-shadow: .1vw .2vw .2vw 0 #444444;
+            background: #666666;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        #books {
+            margin-left: 1vw;
+        }
+
+        #itemsNumber {
+            text-align: right;
+            background: #dddddd;
+            color: #333333;
+        }
+
+        #post, #home, #other, #wrapping {
+            margin-left: 1vw;
+        }
+
+        #result, #resultPrice {
+            padding-left: 10vw;
+            padding-right: .7vw;
+            margin: .3vw;
+            background: #dddddd;
+            color: #333333;
+        }
+
+        .button:focus {
+            outline: 0;
+        }
+
+        .button:hover {
+            cursor: pointer;
+            -webkit-box-shadow: .2vw .3vw .3vw 0 #777777;
+            box-shadow: .2vw .3vw .2vw 0 #777777;
+        }
+
+        .button:active {
+            box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.12), 0 0 0 0 rgba(0, 0, 0, 0.2);
+            filter: brightness(90%);
+        }
+
+        .button {
+            -webkit-box-shadow: .2vw .3vw .3vw 0 #444444;
+            box-shadow: .2vw .2vw .3vw 0 #444444;
+            transition: box-shadow, filter 100ms;
+            background: #990000;
+            color: #ffffff;
+            font-weight: bold;
+            line-height: 36px;
+            padding: 0 2vw;
+            border: none;
+            border-radius: 2px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .name {
+            font-size: 1.7vw;
+        }
+
+        #name, #address {
+            background: #dddddd;
+            margin: .2vw;
+        }
+    </style>
+</head>
+<body>
+<form class="box" id="form">
+    <div class="box center">
+        <span class="name">Замовлення на придбання товару</span>
+    </div>
+    <div class="box">
+        <span>Назва товару</span><br>
+        <select id="books"></select>
+    </div>
+    <div class="box">
+        <span>Кількість</span>
+        <input onchange="updateData()" id="itemsNumber" type="number" step="1" class="box" value="0" min="0">
+        <span>Вартість замовлених книг</span>
+        <span id="resultPrice" class="box">0</span>
+    </div>
+    <div class="box">
+        <span>Спосіб доставки замовлення: </span>
+        <br>
+        <input onchange="commonFunc()" type="radio" name="delivery" value="post" id="post" checked="checked">Поштою
+        (+10%)<br>
+        <input onchange="commonFunc()" type="radio" name="delivery" value="to-home" id="home">Доставкою на дом
+        (+20%)<br>
+        <input onclick="otherFunc()" type="radio" name="delivery" value="other" id="other">Інше
+        (+30%)<br>
+        <input type="text" id="otherField"><br>
+        <input onchange="updateData()" type="checkbox" id="wrapping">У святковій упаковці (+10%)
+    </div>
+    <div class="box right">
+        <span>Загальна вартість замовлення</span>
+        <span id="result" class="box">0</span>
+        <span id="count" class="button" onclick="countFunc()">Підрахувати</span>
+    </div>
+    <div class="box">
+        <span>Дані замовника</span>
+        <br>
+        <form action="" id="data">
+            <span>Ім'я</span>
+            <input type="text" id="name">
+            <br>
+            <span>Адреса</span>
+            <input type="text" id="address">
+        </form>
+    </div>
+    <div class="box right">
+        <span id="reset" class="button" onclick="resetFunc()">Відновити початкові значення полів</span>
+        <span id="send" class="button" onclick="submit()">Відіслати данні</span>
+    </div>
+</form>
+<div id="end"></div>
+</body>
+<script>
+    var books = [
+        {name: 'Scott Meyers : Effective C++', price: 54.99},
+        {name: 'Scott Meyers : Effective Modern C++', price: 38.12},
+        {name: 'Dmitri Nesteruk : Design Patterns in Modern C++', price: 34.19},
+        {name: 'Claudia Doppioslash: Physically Based Shader Development for Unity', price: 44.99},
+        {name: 'Joseph & Ben Albahari : C# 7.0 in a Nutshell', price: 63.41},
+        {name: 'Stephan Roth : Clean C++', price: 35.44}
+    ];
+
+    var booksNumber = document.getElementById('itemsNumber');
+    var list = document.getElementById('books');
+    var booksPrice = document.getElementById('resultPrice');
+
+    var result = document.getElementById('result');
+
+    var post = document.getElementById('post');
+    var home = document.getElementById('home');
+    var wrapping = document.getElementById('wrapping');
+
+    var nameValue = document.getElementById('name');
+    var addressValue = document.getElementById('address');
+
+    var end = document.getElementById('end');
+
+    var orderedBooks = new Array();
+    var other = document.getElementById("other");
+    var otherField = document.getElementById("otherField");
+
+    var totalCount = 0;
+    var bookSumm = 0;
+    var wrappingSumm = 0;
+    var postSumm = 0;
+
+    window.onload = function () {
+        for (var book in books) {
+            list.innerHTML += '<option value="' + books[book].name + '">' + books[book].name + ' - ' + books[book].price + ' $.</option>';
+        }
+        otherField.hidden = true;
+    }
+
+    function updateData() {
+        var booksSumm;
+        var wrappingSumm = 0;
+        var number = Math.floor(Number(booksNumber.value));
+        booksNumber.value = number;
+
+        var res = books[list.selectedIndex].price * number;
+        booksNumber.innerHTML = res;
+        booksSumm = res;
+
+        if (post.checked)
+            res *= 1.1;
+        if (home.checked)
+            res *= 1.2;
+        if (other.checked)
+            res *= 1.3;
+
+        if (wrapping.checked) {
+            wrappingSumm = res * 0.1;
+            res *= 1.1;
+        }
+
+        res = res.toFixed(2);
+        booksSumm = booksSumm.toFixed(2);
+        wrappingSumm = wrappingSumm.toFixed(2);
+
+        booksPrice.innerHTML = booksSumm;
+        result.innerHTML = res;
+
+        return new Array(booksSumm, wrappingSumm, res);
+    }
+
+    list.addEventListener('change', (event) => updateData());
+
+    function resetFunc() {
+        document.getElementById("form").reset();
+
+        booksPrice.innerHTML = '0';
+        result.innerHTML = '0';
+
+        while (end.firstChild)
+            end.removeChild(end.firstChild);
+
+        orderedBooks = new Array();
+    }
+
+    function setElement(str, value, el) {
+        var span = document.createElement('span');
+        span.innerHTML = str + value;
+        el.appendChild(span);
+        el.appendChild(document.createElement('br'));
+    }
+
+
+    function submit() {
+        var nameStr = nameValue.value;
+        var addressStr = addressValue.value;
+
+        if (nameStr == '' || addressStr == '' || booksNumber.value == '0') {
+            var error = '<span>Поля не заповнені.</span><br>'
+            end.innerHTML = error;
+            return;
+        } else {
+            end.innerHTML = '';
+
+            var results = updateData();
+            bookSumm = results[0];
+            wrappingSumm = results[1];
+            postSumm = (post.checked == true ? (bookSumm * 0.1) : bookSumm * 0.2).toFixed(2);
+            var res = results[2];
+
+            var header = document.createElement('h4');
+            header.innerHTML = 'Замовлення';
+            end.appendChild(header);
+        }
+
+        var order = document.createElement('div');
+
+
+        setElement('Імя заповника:   ', nameStr, order);
+        setElement('Адреса замовника:   ', addressStr, order);
+        setElement('   ', '   ', order);
+
+        var totalCount=0;
+
+        for (var i in orderedBooks) {
+            totalCount+=Number(orderedBooks[i].summ);
+            setElement("Назва товару:  ", orderedBooks[i].name, order);
+            setElement("Кількість товару:  ", orderedBooks[i].number, order);
+            setElement("Доставка:   ", orderedBooks[i].delivery, order);
+
+            setElement('Вартість товару:   ', orderedBooks[i].bookSumm, order);
+            setElement('Вартість доставки:   ', orderedBooks[i].postSumm, order);
+
+            setElement('Вартість упаковки:   ', orderedBooks[i].wrapping, order);
+
+            setElement('Загальна сума:   ', orderedBooks[i].result, order);
+
+            setElement('-------------------', '-------------------', order);
+            end.appendChild(order);
+        }
+
+        setElement('Загальна сума:   ', totalCount+' $', order);
+    }
+
+    function otherFunc() {
+        otherField.hidden = false;
+        updateData();
+    }
+
+    function commonFunc() {
+        otherField.hidden = true;
+        updateData();
+    }
+
+    function countFunc() {
+        var tmp=updateData();
+        var tmpDelivery;
+        var tmpPostSumm=0;
+        if(other.checked){
+            tmpDelivery=otherField.value;
+            tmpPostSumm=(tmp[0] * 0.3).toFixed(2);
+        }
+        else if(post.checked){
+            tmpDelivery="Поштою ";
+            tmpPostSumm=(tmp[0] * 0.1).toFixed(2);
+        }
+        else if(home.checked){
+            tmpDelivery="На дім ";
+            tmpPostSumm=(tmp[0] * 0.2).toFixed(2);
+        }
+
+        orderedBooks.push
+        ({
+            name: books[list.selectedIndex].name,
+            number: booksNumber.value,
+            delivery: tmpDelivery,
+            bookSumm: tmp[0] + '$',
+            postSumm: tmpPostSumm + '$',
+            wrapping: tmp[1] + ' $',
+            result: tmp[2]+ ' $',
+            summ:tmp[2]
+        });
+    }
+
+
+</script>
+</html>

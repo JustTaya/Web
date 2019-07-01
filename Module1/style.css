@@ -1,0 +1,152 @@
+html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    left: 0;
+    top: 0;
+}
+
+.container {
+    height: 1300px;
+    width: 800px;
+    background: grey;
+    left: 0;
+    top: 0;
+    margin-left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.useless_header {
+    background: black;
+    float: left;
+    height: 30px;
+    width: 100%;
+}
+
+li {
+    list-style-image: url(/pictures/7.png);
+    list-style-type: disc;
+}
+
+
+p,li{
+    font-size: 1vw;
+}
+
+.object1 {
+    top: 30px;
+}
+
+.object2 {
+    bottom: 0;
+}
+
+.object1, .object2 {
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    right: 0;
+    background: rgba(165, 165, 165, 0.404);
+}
+
+.object1:before {
+    content: '';
+    border-top: 1.5vw solid rgba(165, 165, 165, 0.404);
+    border-right: 800px solid transparent;
+    border-bottom: 0vw;
+    border-left: 0vw;
+    position: absolute;
+    right: 0;
+    bottom: -1.5vw;
+    margin-top: 1.5vw;
+}
+
+.object2:before {
+    content: '';
+    border-top: 0vw;
+    border-left: 800px solid transparent;
+    border-bottom: 1.5vw solid rgba(165, 165, 165, 0.404);
+    border-right: 0vw;
+    position: absolute;
+    right: 0;
+    bottom: 50px;
+    margin-top: 1.5vw;
+}
+
+.left-block {
+    left: 0;
+    top: 30px;
+    width: 250px;
+    height: 1270px;
+    position: absolute;
+    background: rgba(180, 180, 180, 0.404);
+}
+
+img.image1 {
+    height: 200px;
+    width: 120px;
+    margin-left: 65px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    -webkit-box-shadow: .5vw .7vw .5vw 0 black;
+    box-shadow: .5vw .7vw .5vw 0 black;
+}
+
+img.image2 {
+    height: 120px;
+    width: 200px;
+    margin-left: 50px;
+    margin-right: 0;
+    margin-bottom: 10px;
+}
+
+.right-block {
+    position: absolute;
+    left: 250px;
+    top: 30px;
+    width: 550px;
+    height: 1270px
+}
+
+.text1 {
+    width: 500px;
+    margin-top: 20px;
+    margin-left: 25px;
+    margin-right: 25px;
+    text-align: justify;
+}
+
+img.image3 {
+    height: 250px;
+    width: 400px;
+    margin-left: 60px;
+    margin-right: 70px;
+    float: left;
+}
+
+.left-text {
+    position: absolute;
+    left: 0;
+    top: 350px;
+    width: 225px;
+    height: 1270px;
+    padding: 2vw;
+}
+
+.right-text{
+    position: absolute;
+    left: 250px;
+    top: 350px;
+    width: 225px;
+    height: 1270px;
+    padding: 2vw;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+
+.yellow{
+    background: yellow;
+}

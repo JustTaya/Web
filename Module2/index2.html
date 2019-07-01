@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style></style>
+</head>
+
+<body>
+<div>
+    <label for="width">Width:</label>
+    <input type="number" id="width" value="400" oninput="changeWidth()" />
+    <label for="height">Height:</label>
+    <input type="number" id="height" value="400" oninput="changeHeight()" />
+    <label for="time">Time:</label>
+    <input type="number" id="time" value="500" onchange="changeTime()" />
+    <input type="button" id="slideshow" onclick="slideshow()" value="Start slideshow" />
+    <button onclick="prev()">&lt;-</button>
+    <button onclick="next()">-></button>
+</div>
+<div id="imagebar">
+    <img src="1.jpg" width="300px" height="300px" />
+    <img src="2.jpg" style="display:none;" width="400px" height="400px" />
+    <img src="3.jpg" style="display:none;" width="400px" height="400px" />
+    <img src="4.jpg" style="display:none;" width="400px" height="400px" />
+    <img src="5.jpg" style="display:none;" width="400px" height="400px" />
+</div>
+</body>
+<script>
+    let time = 500;
+    let slideshowInterval;
+    let imagebar = document.getElementById("imagebar");
+
+    function next() {
+        let images = imagebar.getElementsByTagName("img");
+        for (let i = 0; i < images.length; i++) {
+            if (images[i].style.display != "none") {
+                images[i].style.display = "none";
+                if (i + 1 == images.length)
+                    images[0].style.display = "block";
+                else
+                    images[i + 1].style.display = "block";
+                break;
+            }
+        }
+    }
+
+    function prev() {
+        let images = imagebar.getElementsByTagName("img");
+        for (let i = 0; i < images.length; i++) {
+            if (images[i].style.display != "none") {
+                images[i].style.display = "none";
+                if (!i)
+                    images[images.length - 1].style.display = "block";
+                else
+                    images[i - 1].style.display = "block";
+                break;
+            }
+        }
+    }
+
+    function changeWidth() {
+        let images = imagebar.getElementsByTagName("img");
+        for (let i = 0; i < images.length; i++) {
+            images[i].setAttribute("width", document.getElementById("width").value + "px");
+        }
+    }
+
+    function changeHeight() {
+        let images = imagebar.getElementsByTagName("img");
+        for (let i = 0; i < images.length; i++) {
+            images[i].setAttribute("height", document.getElementById("height").value + "px");
+        }
+    }
+
+    function slideshow() {
+        let slideButton = document.getElementById("slideshow");
+        if (slideButton.value == "Start slideshow") {
+            slideshowInterval = setInterval(function() {
+                next();
+            }, document.getElementById("time").value);
+            slideButton.value = "Stop slideshow";
+        } else {
+            clearInterval(slideshowInterval);
+            slideButton.value = "Start slideshow";
+        }
+    }
+
+    function changeTime() {
+        let slideButton = document.getElementById("slideshow");
+        if (slideButton.value == "Stop slideshow") {
+            clearInterval(slideshowInterval);
+            slideshowInterval = setInterval(function() {
+                next();
+            }, document.getElementById("time").value);
+        }
+    }
+</script>
+</html>

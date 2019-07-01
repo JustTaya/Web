@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Task1</title>
+    <style>
+        body {
+            padding: 4vw;
+        }
+
+        input::placeholder {
+            color: #111111;
+        }
+
+        input {
+            -webkit-box-shadow: .5vw .7vw .5vw 0 #444444;
+            box-shadow: .5vw .7vw .5vw 0 #444444;
+            font-size: 2vw;
+            padding: 2vw 3vw 1vw 3vw;
+            outline-width: 0;
+            border: none;
+            background: #EEEEEE;
+            color: #111111;
+        }
+
+        input:focus {
+            border: .1vw solid #990000;
+            -webkit-box-shadow: .5vw .7vw .5vw 0 #777777;
+            box-shadow: .5vw .7vw .5vw 0 #777777;
+        }
+
+        input:hover {
+            background: #EEEEEE;
+            -webkit-box-shadow: .5vw .7vw .5vw 0 #777777;
+            box-shadow: .5vw .7vw .5vw 0 #777777;
+        }
+
+        button:focus {
+            outline: 0;
+        }
+
+        button:hover {
+            cursor: pointer;
+            -webkit-box-shadow: .5vw .7vw .5vw 0 #777777;
+            box-shadow: .5vw .7vw .5vw 0 #777777;
+        }
+
+        button:active {
+            box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.12), 0 0 0 0 rgba(0, 0, 0, 0.2);
+            filter: brightness(90%);
+        }
+
+        button {
+            margin-left: 2vw;
+            margin-top: -10vw;
+            -webkit-box-shadow: .5vw .7vw .5vw 0 #444444;
+            box-shadow: .5vw .7vw .5vw 0 #444444;
+            transition: box-shadow, filter 100ms;
+            background: #990000;
+            color: #ffffff;
+            font-size: 2vw;
+            font-weight: bold;
+            height: 4vw;
+            padding: 0 2vw;
+            border: 0;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .block {
+            min-height: 3vw;
+            min-width: 3vw;
+            width: 3vw;
+            height: 3vw;
+            padding: 0;
+        }
+
+        .light {
+            background: whitesmoke;
+        }
+
+        .dark {
+            background: #333333;
+        }
+
+
+        #main {
+            margin: 2vw;
+            margin-top: 5vw;
+        }
+
+
+        .table {
+            margin: 0;
+        }
+
+        tr,td{
+            margin: 0;
+            padding: 0;
+        }
+
+        td{
+            min-height: 3vw;
+            min-width: 3vw;
+            height: 3vw;
+            width: 3vw;
+        }
+
+
+    </style>
+</head>
+<body>
+<input type="number" id="M" step="1" placeholder="Rows" min="0" oninput="validity.valid||(value='');">
+<input type="number" id="N" step="1" placeholder="Columns" min="0" oninput="validity.valid||(value='');">
+<button id="button">Submit</button>
+<table id="main"></table>
+</body>
+<script>
+    var main = document.getElementById('main');
+    var M = document.getElementById('M');
+    var N = document.getElementById('N');
+    document.getElementById('button').onclick = function () {
+        main.innerHTML = '';
+        var m = Number(M.value);
+        var n = Number(N.value);
+        if (m == 0 || n == 0)
+            alert('Input number must be > 0');
+        else {
+            for (var i = 0; i < m; ++i) {
+                var table = document.createElement('tr');
+                table.classList.add('table');
+                for (var j = 0; j < n; ++j) {
+                    if ((i + j) % 2 == 1) {
+                        var darkBlock = document.createElement('td');
+                        darkBlock.classList.add('block');
+                        darkBlock.classList.add('dark');
+                        table.appendChild(darkBlock);
+                    } else {
+                        var lightBlock = document.createElement('td');
+                        lightBlock.classList.add('block');
+                        lightBlock.classList.add('light');
+                        table.appendChild(lightBlock);
+                    }
+                }
+                main.appendChild(table);
+            }
+        }
+    }
+</script>
+</html>
